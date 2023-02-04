@@ -1,20 +1,15 @@
 {
   "name": "nodejs-job-assistant",
   "version": "1.0.0",
-  "description": "A comprehensive job management system with APIs, crawler, and frontend",
+  "description": "A comprehensive job management system with RESTful APIs",
   "main": "server/index.js",
   "scripts": {
     "start": "node server/index.js",
     "dev": "nodemon server/index.js",
-    "crawler": "node crawler/index.js",
-    "crawler:dev": "nodemon crawler/index.js",
-    "frontend": "cd frontend && npm start",
-    "frontend:build": "cd frontend && npm run build",
-    "install:all": "npm install && cd frontend && npm install",
     "test": "jest",
     "test:watch": "jest --watch"
   },
-  "keywords": ["jobs", "api", "crawler", "frontend"],
+  "keywords": ["jobs", "api", "backend", "rest"],
   "author": "Your Name",
   "license": "MIT",
   "dependencies": {
@@ -25,10 +20,6 @@
     "dotenv": "^16.3.1",
     "mongoose": "^8.0.3",
     "joi": "^17.11.0",
-    "axios": "^1.6.2",
-    "cheerio": "^1.0.0-rc.12",
-    "puppeteer": "^21.6.1",
-    "node-cron": "^3.0.3",
     "winston": "^3.11.0"
   },
   "devDependencies": {
