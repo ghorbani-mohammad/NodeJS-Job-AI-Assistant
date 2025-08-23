@@ -1,10 +1,10 @@
-version: '3.8'
-
 services:
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - 3000:3000
     depends_on:
       mongodb:
         condition: service_healthy
@@ -15,17 +15,18 @@ services:
     restart: unless-stopped
 
   mongodb:
-    image: mongo:7.0
-    ports:
-      - "27017:27017"
+    build:
+      context: ./mongo
+      dockerfile: Dockerfile
     volumes:
       - ./mongodb_data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
     healthcheck:
-      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand({ ping: 1 }).ok"]
       interval: 10s
       timeout: 5s
       retries: 5
       start_period: 40s
-    env_file:
-      - .env
     restart: unless-stopped
