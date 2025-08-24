@@ -3,11 +3,14 @@ const logger = require('../utils/logger');
 
 const connectDB = async () => {
   try {
-    const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost:27017/job-assistant';
+    const mongoURI = process.env.MONGODB_URI || 'mongodb://mongodb:27017/job-assistant';
     
     const conn = await mongoose.connect(mongoURI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+      // Connection options optimized for Docker environment
+      serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of 30s
+      socketTimeoutMS: 45000, // Close sockets after 45s of inactivity
+      bufferMaxEntries: 0, // Disable mongoose buffering
+      bufferCommands: false, // Disable mongoose buffering
     });
 
     logger.info(`MongoDB Connected: ${conn.connection.host}`);
@@ -27,7 +30,8 @@ const connectDB = async () => {
 
   } catch (error) {
     logger.error('Database connection failed:', error);
-    process.exit(1);
+    // Don't exit immediately, let the process handle reconnection
+    throw error;
   }
 };
 
