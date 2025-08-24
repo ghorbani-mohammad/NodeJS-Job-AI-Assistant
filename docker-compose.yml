@@ -15,9 +15,7 @@ services:
     restart: unless-stopped
 
   mongodb:
-    build:
-      context: ./mongo
-      dockerfile: Dockerfile
+    image: mongo:7.0
     volumes:
       - ./mongodb_data:/data/db
     environment:
