@@ -2,6 +2,8 @@
 
 A comprehensive RESTful API for job management, built with Node.js, Express.js, and MongoDB.
 
+**🌐 Live Demo**: [https://nodejs-job-ai-api.m-gh.com](https://nodejs-job-ai-api.m-gh.com)
+
 ## Features
 
 - **Job Management**: Full CRUD operations for job postings
