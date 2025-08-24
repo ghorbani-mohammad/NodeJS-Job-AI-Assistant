@@ -14,7 +14,7 @@ const jobRoutes = require('./routes/jobs');
 const searchRoutes = require('./routes/search');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8126;
 
 // Connect to database
 connectDB();

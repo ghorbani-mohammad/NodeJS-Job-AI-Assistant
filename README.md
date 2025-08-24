@@ -71,7 +71,7 @@ server/
    npm start
    ```
 
-The server will start on `http://localhost:3000` (or the port specified in your `.env` file).
+The server will start on `http://localhost:8126` (or the port specified in your `.env` file).
 
 ## API Endpoints
 
@@ -201,7 +201,7 @@ Create a `.env` file based on `env.example`:
 
 ```bash
 # Server Configuration
-PORT=3000
+PORT=8126
 NODE_ENV=development
 
 # Database Configuration
