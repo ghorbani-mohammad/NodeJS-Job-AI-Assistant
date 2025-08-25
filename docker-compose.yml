@@ -30,7 +30,7 @@ services:
       - .env
     command: >
       mongod
-      --wiredTigerCacheSizeGB 0.1
+      --wiredTigerCacheSizeGB 0.25
       --setParameter maxTransactionLockRequestTimeoutMillis=5000
       --setParameter enableLocalhostAuthBypass=false
     deploy:
