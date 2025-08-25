@@ -13,6 +13,14 @@ services:
     env_file:
       - .env
     restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 128M
+          cpus: '0.1'
+        reservations:
+          memory: 64M
+          cpus: '0.05'
 
   mongodb:
     image: mongo:7.0
@@ -22,17 +30,17 @@ services:
       - .env
     command: >
       mongod
-      --wiredTigerCacheSizeGB 0.25
+      --wiredTigerCacheSizeGB 0.1
       --setParameter maxTransactionLockRequestTimeoutMillis=5000
       --setParameter enableLocalhostAuthBypass=false
     deploy:
       resources:
         limits:
-          memory: 256M
-          cpus: '0.25'
-        reservations:
           memory: 128M
           cpus: '0.1'
+        reservations:
+          memory: 64M
+          cpus: '0.05'
     ulimits:
       nproc: 65536
       nofile:
