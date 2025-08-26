@@ -16,6 +16,9 @@ const searchRoutes = require('./routes/search');
 const app = express();
 const PORT = process.env.PORT || 8126;
 
+// Trust proxy - needed when running behind Docker/proxy
+app.set('trust proxy', 1);
+
 // Connect to database
 connectDB();
 
