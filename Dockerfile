@@ -1,19 +1,13 @@
-# Multi-stage build for production
-FROM node:18-alpine AS base
+FROM node:18-alpine
 
-# Set working directory
 WORKDIR /app
 
-# Copy package files
 COPY package*.json ./
 
-# Install dependencies
 RUN npm install --omit=dev && npm cache clean --force
 
-# Copy source code
 COPY . .
 
-# Create logs directory
 RUN mkdir -p logs
 
 # Create non-root user
