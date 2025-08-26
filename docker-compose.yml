@@ -13,14 +13,6 @@ services:
     env_file:
       - .env
     restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          memory: 128M
-          cpus: '0.1'
-        reservations:
-          memory: 64M
-          cpus: '0.05'
 
   mongodb:
     image: mongo:7.0
@@ -28,28 +20,27 @@ services:
       - ./mongodb_data:/data/db
     env_file:
       - .env
-    command: >
-      mongod
-      --wiredTigerCacheSizeGB 0.25
-      --setParameter maxTransactionLockRequestTimeoutMillis=5000
-      --setParameter enableLocalhostAuthBypass=false
-    deploy:
-      resources:
-        limits:
-          memory: 128M
-          cpus: '0.1'
-        reservations:
-          memory: 64M
-          cpus: '0.05'
+    command:
+      - mongod
+      - --wiredTigerCacheSizeGB
+      - "0.25"
+      - --setParameter
+      - maxTransactionLockRequestTimeoutMillis=5000
+      - --setParameter
+      - enableLocalhostAuthBypass=false
+      - --wiredTigerJournalCompressor=none
+      - --wiredTigerCollectionBlockCompressor=none
+      - --wiredTigerIndexPrefixCompression=false
+      - --syncdelay=0
     ulimits:
       nproc: 65536
-      nofile:
-        soft: 20000
-        hard: 40000
+      nofile: { soft: 20000, hard: 40000 }
     healthcheck:
-      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand({ ping: 1 }).ok"]
-      interval: 10s
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')", "--quiet"]
+      interval: 15s
       timeout: 5s
-      retries: 5
-      start_period: 40s
+      retries: 8
+      start_period: 120s
     restart: unless-stopped
+    mem_limit: "512m"
+    cpus: "0.2"
