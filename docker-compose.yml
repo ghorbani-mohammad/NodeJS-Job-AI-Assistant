@@ -1,5 +1,6 @@
 services:
   app:
+    container_name: nodejs-job-app
     build:
       context: .
       dockerfile: Dockerfile
@@ -14,6 +15,7 @@ services:
     restart: unless-stopped
 
   mongodb:
+    container_name: nodejs-job-mongodb
     image: mongo:7.0
     volumes:
       - ./mongodb_data:/data/db
