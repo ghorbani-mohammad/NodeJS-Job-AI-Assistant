@@ -6,8 +6,7 @@ services:
     ports:
       - 8126:8126
     depends_on:
-      mongodb:
-        condition: service_healthy
+      - mongodb
     volumes:
       - ./logs:/app/logs
     env_file:
@@ -22,6 +21,7 @@ services:
       - .env
     command:
       - mongod
+      - --quiet # reduce log output
       - --wiredTigerCacheSizeGB
       - "0.25"
       - --setParameter
@@ -35,12 +35,6 @@ services:
     ulimits:
       nproc: 65536
       nofile: { soft: 20000, hard: 40000 }
-    healthcheck:
-      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')", "--quiet"]
-      interval: 15s
-      timeout: 5s
-      retries: 8
-      start_period: 120s
     restart: unless-stopped
     mem_limit: "512m"
     cpus: "0.2"
